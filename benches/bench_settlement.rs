@@ -5,11 +5,12 @@ use criterion::{criterion_group, criterion_main, Criterion};
 use elliptic_curve::Field;
 use futures::{SinkExt, StreamExt};
 use k256::{sha2::Sha256, AffinePoint, ProjectivePoint, Scalar, Secp256k1};
-use rand::rngs::OsRng;
+use rand::{rngs::OsRng, Rng};
 use tokio::{net::{TcpListener, TcpStream}, runtime::Runtime, task::JoinSet};
 use tokio_util::{bytes::Bytes, codec::{Framed, LengthDelimitedCodec}};
 
 const CENTADDR: &'static str = "127.0.0.1:0";
+const BTCHSIZE: usize = 256;
 const RINGSIZE: usize = 128;
 const SGNUMBER: usize = 2560;
 
@@ -19,20 +20,21 @@ async fn commbank(addr: SocketAddr, params: &IncognitoParams::<Secp256k1, RINGSI
     let start = Instant::now();
 
     let mut rng = OsRng::default();
-    let sks: Vec<_> = (0..RINGSIZE).map(|_| Scalar::random(&mut rng)).collect();
-    let pks: Vec<_> = sks.iter().map(|s| ProjectivePoint::GENERATOR * s).collect();    
+    let sks: Vec<_> = (0..BTCHSIZE).map(|_| Scalar::random(&mut rng)).collect();
+    let pks: Vec<_> = sks.iter().map(|s| ProjectivePoint::GENERATOR * s).collect();
     
     let mut set = JoinSet::new();
 
     (0..SGNUMBER).for_each(|i| {
         let params = params.clone();
-        let pks = pks.clone();
-        let ski = sks[RINGINDX].clone();
+        let ids = (0..RINGSIZE).map(|_| rng.gen_range(0..BTCHSIZE)).collect::<Vec<usize>>();
+        let pks = ids.iter().map(|i| pks[*i].clone()).collect::<Vec<_>>();
+        let ski = sks[ids[RINGINDX]].clone();
         set.spawn(async move {
             let msg = format!("the {}-th transaction in the same interval", i);
             let signature = SchnorrSignature::<Secp256k1>::sign::<Sha256>(&ski, &msg.as_bytes());
             let incsig = params.convert::<Sha256>(&pks, &msg.as_bytes(), &signature, RINGINDX).unwrap();
-            (pks.into_iter().map(|each| each.to_affine()).collect::<Vec<_>>(), msg, incsig)
+            Bytes::from(bincode::serialize(&(ids, msg, incsig)).unwrap())
         });
     });
 
@@ -43,8 +45,13 @@ async fn commbank(addr: SocketAddr, params: &IncognitoParams::<Secp256k1, RINGSI
 
     let socket = TcpStream::connect(addr).await.unwrap();
     let mut framed = Framed::new(socket, LengthDelimitedCodec::new());
+    framed.send(Bytes::from(
+        bincode::serialize(
+            &pks.into_iter().map(|each| each.to_affine()).collect::<Vec<_>>()
+        ).unwrap()
+    )).await.unwrap();
     for data in data_pending.into_iter() {
-        framed.send(Bytes::from(bincode::serialize(&data).unwrap())).await.unwrap();
+        framed.send(data).await.unwrap();
     };
 
     start.elapsed()
@@ -58,10 +65,11 @@ async fn centbank(listener: &TcpListener, params: &IncognitoParams::<Secp256k1, 
 
     let mut set = JoinSet::new();
 
+    let pks: Vec<AffinePoint> = bincode::deserialize(&framed.next().await.unwrap().unwrap()).unwrap();
     for _ in 0..SGNUMBER {
         let params = params.clone();
-        let (pks, msg, incsig): (Vec<AffinePoint>, String, IncognitoSignature<Secp256k1>) = bincode::deserialize(&framed.next().await.unwrap().unwrap()).unwrap();
-        let pks = pks.into_iter().map(|each| ProjectivePoint::from(each)).collect::<Vec<_>>();
+        let (ids, msg, incsig): (Vec<usize>, String, IncognitoSignature<Secp256k1>) = bincode::deserialize(&framed.next().await.unwrap().unwrap()).unwrap();
+        let pks = ids.into_iter().map(|i| ProjectivePoint::from(pks[i])).collect::<Vec<_>>();
         set.spawn(async move {
             params.verify::<Sha256>(&pks, &msg.as_bytes(), &incsig)
         });
