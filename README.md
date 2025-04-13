@@ -1,3 +1,6 @@
+# Installation
+Install Rust following the instruction on https://doc.rust-lang.org/book/ch01-01-installation.html.
+
 # Bench all without latency
 ```bash
 cargo bench
