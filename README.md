@@ -1,5 +1,5 @@
 # Installation
-Install [Rust programming language] (https://doc.rust-lang.org/book/ch01-01-installation.html)
+Install [Rust programming language](https://doc.rust-lang.org/book/ch01-01-installation.html)
 
 # Bench all without latency
 ```bash
