@@ -1,8 +1,18 @@
 # Setup
-1. Install Rust programming language following [the instructions](https://doc.rust-lang.org/book/ch01-01-installation.html)
-2. Traffic control commands (tc) only function on Linux environment, which affects bench_retail.rs
+1. Install Rust programming language following [official instructions](https://doc.rust-lang.org/book/ch01-01-installation.html)
+2. Traffic control commands [(tc)](https://man7.org/linux/man-pages/man8/tc.8.html) only function on Linux environment, which affects bench_retail.rs
 
 # Benchmark
+The benchmarks directory provides convenience scripts to run all the examples. There are 5 scripts:
+Some body text of this section.
+
+<a name="my-custom-anchor-point"></a>
+Some text I want to provide a direct link to, but which doesn't have its own heading.
+
+(… more content…)
+
+[A link to that custom anchor](#my-custom-anchor-point)
+
 ## Bench all without latency
 ```bash
 cargo bench
