@@ -1,17 +1,15 @@
 # Setup
 1. Install Rust programming language following [official instructions](https://doc.rust-lang.org/book/ch01-01-installation.html)
-2. Traffic control commands [(tc)](https://man7.org/linux/man-pages/man8/tc.8.html) only function on Linux environment, which affects bench_retail.rs
+2. Traffic control commands [(tc)](https://man7.org/linux/man-pages/man8/tc.8.html) only function on Linux environment, which affects  `bench_wallet.rs`, `bench_retail.rs`, and  `bench_settlement.rs`.
 
 # Benchmark
-The benchmarks directory provides convenience scripts to run all the examples. There are 5 scripts:
-Some body text of this section.
+The `benches` directory provides scripts to run five examples:
+1. `bench_dualring.rs` runs [DualRing-EC](https://eprint.iacr.org/2021/1213) to test the signing and verification time.
+2. `bench_incognito.rs` runs proposed Incognito Schnorr Signature to test the signing and verification time.
+3. `bench_wallet.rs`
+4. `bench_retail.rs`
+5. `bench_settlement.rs`
 
-<a name="my-custom-anchor-point"></a>
-Some text I want to provide a direct link to, but which doesn't have its own heading.
-
-(… more content…)
-
-[A link to that custom anchor](#my-custom-anchor-point)
 
 ## Bench all without latency
 ```bash
