@@ -25,6 +25,8 @@ cargo bench
 ```
 It will take a minute for [Cargo](https://doc.rust-lang.org/book/ch01-03-hello-cargo.html) to download all the libraries used in this project. If you are using Windows or macOS, only `bench_dualring.rs` and `bench_incognito.rs` will run correctly since the other three benchmarks require `tc` commands on Linux.
 
+<img width="567" alt="incog32" src="https://github.com/user-attachments/assets/fa877317-d867-4330-8b7d-41689a75284b" />
+
 ## Bench with 50ms RTT
 ```
 sudo tc qdisc add dev lo root netem latency 25ms
