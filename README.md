@@ -8,7 +8,7 @@
    rustc --version
    cargo --version
    ```
-3. Traffic control commands [(tc)](https://man7.org/linux/man-pages/man8/tc.8.html) may only work on Linux environment, which affects `bench_wallet.rs`, `bench_retail.rs`, and  `bench_settlement.rs`.
+3. Traffic control commands [(tc)](https://man7.org/linux/man-pages/man8/tc.8.html) only work on Linux environment, which affects `bench_wallet.rs`, `bench_retail.rs`, and  `bench_settlement.rs`.
 
 # Benchmark
 The `benches` directory provides scripts to run five examples:
@@ -20,12 +20,13 @@ The `benches` directory provides scripts to run five examples:
 
 
 ## Bench all without latency
-```bash
+```
 cargo bench
 ```
+It will take a minute for [Cargo](https://doc.rust-lang.org/book/ch01-03-hello-cargo.html) to download all the libraries used in this project. If you are using Windows or macOS, only `bench_dualring.rs` and `bench_incognito.rs` will run correctly since the other three benchmarks require `tc` commands on Linux.
 
 ## Bench with 50ms RTT
-```bash
+```
 sudo tc qdisc add dev lo root netem latency 25ms
 ping 127.0.0.1 -c 4
 cargo bench --bench bench_wallet
@@ -33,7 +34,7 @@ cargo bench --bench bench_retail
 ```
 
 ## Bench with 200ms RTT
-```bash
+```
 sudo tc qdisc change dev lo root netem latency 100ms
 ping 127.0.0.1 -c 4
 cargo bench --bench bench_wallet
@@ -41,13 +42,13 @@ cargo bench --bench bench_retail
 ```
 
 ## Bench with 10ms RTT
-```bash
+```
 sudo tc qdisc change dev lo root netem latency 5ms
 ping 127.0.0.1 -c 4
 cargo bench --bench bench_settlement
 ```
 
 ## Cleanup
-```bash
+```
 sudo tc qdisc del dev lo root
 ```
