@@ -16,7 +16,7 @@ The `benches` directory provides scripts to run five examples:
 2. `bench_incognito.rs` runs proposed Incognito Schnorr Signature to test the signing and verification time.
 3. `bench_wallet.rs` simulates wallets with user and amount information.
 4. `bench_retail.rs` simulates retail transactions between wallets.
-5. `bench_settlement.rs` simulates a two-tier Central Bank Digital Currency [(CBDC)](https://www.bis.org/publ/othp57.pdf).
+5. `bench_settlement.rs` simulates transactions in a two-tier Central Bank Digital Currency [(CBDC)](https://www.bis.org/publ/othp57.pdf) system.
 
 
 ## Bench all without latency
