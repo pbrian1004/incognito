@@ -1,5 +1,6 @@
 # Setup
-1. Install Rust programming language following [official instructions](https://doc.rust-lang.org/book/ch01-01-installation.html)
+1. Install [Rust](https://doc.rust-lang.org/book/ch01-01-installation.html) programming language by entering the command:
+   `curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh`
 2. Traffic control commands [(tc)](https://man7.org/linux/man-pages/man8/tc.8.html) only function on Linux environment, which affects  `bench_wallet.rs`, `bench_retail.rs`, and  `bench_settlement.rs`.
 
 # Benchmark
