@@ -8,15 +8,15 @@
    rustc --version
    cargo --version
    ```
-3. Traffic control commands [(tc)](https://man7.org/linux/man-pages/man8/tc.8.html) only work on Linux environment, which affects `bench_wallet.rs`, `bench_retail.rs`, and  `bench_settlement.rs`.
+3. Traffic control commands [`tc`](https://man7.org/linux/man-pages/man8/tc.8.html) only work on Linux environment, which affects `bench_wallet.rs`, `bench_retail.rs`, and  `bench_settlement.rs`.
 
 # Benchmark
 The `benches` directory provides scripts to run five examples:
 1. `bench_dualring.rs` runs [DualRing-EC](https://eprint.iacr.org/2021/1213) to test the signing and verification time.
 2. `bench_incognito.rs` runs proposed Incognito Schnorr Signature to test the signing and verification time.
-3. `bench_wallet.rs`
-4. `bench_retail.rs`
-5. `bench_settlement.rs`
+3. `bench_wallet.rs` simulates wallets with user and amount information.
+4. `bench_retail.rs` simulates retail transactions between wallets.
+5. `bench_settlement.rs` simulates a two-tier Central Bank Digital Currency [(CBDC)](https://www.bis.org/publ/othp57.pdf).
 
 
 ## Bench all without latency
@@ -24,8 +24,9 @@ The `benches` directory provides scripts to run five examples:
 cargo bench
 ```
 It will take a minute for [Cargo](https://doc.rust-lang.org/book/ch01-03-hello-cargo.html) to download all the libraries used in this project. If you are using Windows or macOS, only `bench_dualring.rs` and `bench_incognito.rs` will run correctly since the other three benchmarks require `tc` commands on Linux.
+Taking `bench_incognito.rs` for instance, the signing of incognito Schnorr signature spends 45 ms in average while the ring size is 64.
+<img width="567" alt="incog 64" src="https://github.com/user-attachments/assets/68be43c7-452a-4fe8-bd6e-00c44e69d5a9" />
 
-<img width="567" alt="incog32" src="https://github.com/user-attachments/assets/fa877317-d867-4330-8b7d-41689a75284b" />
 
 ## Bench with 50ms RTT
 ```
