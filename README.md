@@ -46,6 +46,15 @@ cargo bench --bench bench_wallet
 cargo bench --bench bench_retail
 cargo bench --bench bench_settlement
 ```
+
+- `qdisc` is queueing discipline to be modified.
+- `add` add a new rule to a node.
+- `dev lo` rules will be applied on device lo.
+- `root` modify the outbound traffic scheduler.
+- `netem` is network emulator to emulate a WAN property.
+- `latency` the network property that is modified.
+- `25ms` introduce a latency of 25 ms to get 50 ms RTT for back and forth traffics.
+
 To cleanup the latency setting:
 ```
 sudo tc qdisc del dev lo root
