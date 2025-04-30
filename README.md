@@ -23,7 +23,8 @@ The `benches` directory provides scripts to run five examples:
 ```
 cargo bench
 ```
-It will take a minute for [Cargo](https://doc.rust-lang.org/book/ch01-03-hello-cargo.html) to download all the libraries used in this project. If you are using Windows or macOS, only `bench_dualring.rs` and `bench_incognito.rs` will run correctly since the other three benchmarks require `tc` commands on Linux. \\
+It will take a minute for [Cargo](https://doc.rust-lang.org/book/ch01-03-hello-cargo.html) to download all the libraries used in this project. If you are using Windows or macOS, only `bench_dualring.rs` and `bench_incognito.rs` will run correctly since the other three benchmarks require `tc` commands on Linux.
+
 Taking `bench_incognito.rs` for instance, the signing of incognito Schnorr signature spends 45 ms in average while the ring size is 64.
 <img width="567" alt="incog 64" src="https://github.com/user-attachments/assets/68be43c7-452a-4fe8-bd6e-00c44e69d5a9" />
 
