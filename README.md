@@ -47,13 +47,15 @@ cargo bench --bench bench_retail
 cargo bench --bench bench_settlement
 ```
 
-- `qdisc` is queueing discipline to be modified.
+- `qdisc` is queueing discipline to modify.
 - `add` add a new rule to a node.
 - `dev lo` rules will be applied on device lo.
 - `root` modify the outbound traffic scheduler.
 - `netem` is network emulator to emulate a WAN property.
-- `latency` the network property that is modified.
-- `25ms` introduce a latency of 25 ms to get 50 ms RTT for back and forth traffics.
+- `latency 25ms` introduce a latency of 25 ms to get 50 ms RTT for back and forth traffics.
+- `ping` send ICMP ECHO_REQUEST to network hosts.
+- `127.0.0.1` is localhost.
+- `-c 4` stop after sending 4 packets.
 
 To cleanup the latency setting:
 ```
