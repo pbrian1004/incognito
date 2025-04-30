@@ -17,7 +17,7 @@ This is the implementation for the paper "Posterior Security: Anonymity and Mess
 
 # Benchmark
 
-The `benches` directory provides scripts to run five examples:
+The `benches` directory provides five scripts:
 1. `bench_dualring.rs` runs [DualRing-EC](https://eprint.iacr.org/2021/1213) to test the signing and verification time.
 2. `bench_incognito.rs` runs proposed Incognito Schnorr Signature to test the signing and verification time.
 3. `bench_wallet.rs` simulates wallets with user and amount information.
