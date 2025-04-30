@@ -1,3 +1,7 @@
+# Posterior Security: Anonymity and Message Hiding of Standard Signatures
+
+This is the implementation for the paper "Posterior Security: Anonymity and Message Hiding of Standard Signatures" in [CCS2025](https://www.sigsac.org/ccs/CCS2025/).
+
 # Setup
 
 1. Install the latest stable version of [Rust](https://doc.rust-lang.org/book/ch01-01-installation.html) by entering the command:
@@ -50,4 +54,4 @@ sudo tc qdisc del dev lo root
 # Contact
 
 Feel free to contact authors if you have questions:
-[Tsz Hon Yuen](https://thyuen.github.io/) and Ying-Teng Chen(ying-teng.chen@monash.edu).
+[Tsz Hon Yuen](https://thyuen.github.io/) and Ying-Teng Chen (ying-teng.chen@monash.edu).
