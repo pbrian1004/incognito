@@ -1,4 +1,5 @@
 # Setup
+
 1. Install the latest stable version of [Rust](https://doc.rust-lang.org/book/ch01-01-installation.html) by entering the command:
    ```
    curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
@@ -11,6 +12,7 @@
 3. Traffic control commands [`tc`](https://man7.org/linux/man-pages/man8/tc.8.html) only work on Linux environment, which affects `bench_wallet.rs`, `bench_retail.rs`, and  `bench_settlement.rs`.
 
 # Benchmark
+
 The `benches` directory provides scripts to run five examples:
 1. `bench_dualring.rs` runs [DualRing-EC](https://eprint.iacr.org/2021/1213) to test the signing and verification time.
 2. `bench_incognito.rs` runs proposed Incognito Schnorr Signature to test the signing and verification time.
@@ -20,6 +22,7 @@ The `benches` directory provides scripts to run five examples:
 
 
 ## Bench all without latency
+
 ```
 cargo bench
 ```
@@ -29,30 +32,22 @@ Taking `bench_incognito.rs` for instance, the signing of incognito Schnorr signa
 <img width="567" alt="incog 64" src="https://github.com/user-attachments/assets/68be43c7-452a-4fe8-bd6e-00c44e69d5a9" />
 
 
-## Bench with 50ms RTT
+## Bench with latency
+
+We use `tc` command to control the round-trip time (RTT) for simulations in `bench_wallet.rs`, `bench_retail.rs`, and  `bench_settlement.rs`. For 50ms RTT latency:
 ```
 sudo tc qdisc add dev lo root netem latency 25ms
 ping 127.0.0.1 -c 4
 cargo bench --bench bench_wallet
 cargo bench --bench bench_retail
-```
-
-## Bench with 200ms RTT
-```
-sudo tc qdisc change dev lo root netem latency 100ms
-ping 127.0.0.1 -c 4
-cargo bench --bench bench_wallet
-cargo bench --bench bench_retail
-```
-
-## Bench with 10ms RTT
-```
-sudo tc qdisc change dev lo root netem latency 5ms
-ping 127.0.0.1 -c 4
 cargo bench --bench bench_settlement
 ```
-
-## Cleanup
+To cleanup the latency setting:
 ```
 sudo tc qdisc del dev lo root
 ```
+
+# Contact
+
+Feel free to contact authors if you have questions:
+[Tsz Hon Yuen](https://thyuen.github.io/) and Ying-Teng Chen(ying-teng.chen@monash.edu).
