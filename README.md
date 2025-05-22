@@ -1,6 +1,6 @@
 # Posterior Security: Anonymity and Message Hiding of Standard Signatures
 
-This is the implementation for the paper "Posterior Security: Anonymity and Message Hiding of Standard Signatures" in [CCS2025](https://www.sigsac.org/ccs/CCS2025/). The benchmarks for our Incognito Schnorr Signature in Rust compare its efficiencty with previous schemes and simulate transactions in a two-tier Central Bank Digital Currency (CBDC) system.
+This is the implementation for the paper "Posterior Security: Anonymity and Message Hiding of Standard Signatures" in [CCS2025](https://www.sigsac.org/ccs/CCS2025/). The benchmarks in Rust for our Incognito Schnorr Signature compare its efficiency with previous schemes and simulate transactions in a two-tier Central Bank Digital Currency (CBDC) system.
 
 # Setup
 
